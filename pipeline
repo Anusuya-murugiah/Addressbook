@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    tools {
+         maven "maven_home"
+    }
+    stages {
+        stage('Checkout sourcecode') {
+            steps {
+                echo 'checkout stage'
+                git 'https://github.com/Anusuya-murugiah/Addressbook.git'
+            }
+        }
+        stage('compile') {
+            steps {
+                echo 'compiler stage'
+                bat 'mvn compile'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Test stage'
+                bat 'mvn test'
+            }
+        }
+        stage('Quality') {
+            steps {
+                echo 'QA stage'
+                bat 'mvn pmd:pmd'
+            }
+        }
+         stage('package') {
+            steps {
+                echo 'package'
+                bat 'mvn package'
+            }
+        }
+    }
+}
